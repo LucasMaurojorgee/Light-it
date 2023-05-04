@@ -4,27 +4,15 @@ import { Character } from "./iCharacter";
 import axios from "axios";
 
 type GetCharacterResponse = {
-  info: { count: Number; pages: Number; next?: String; prev?: String };
+  info: { count: number; pages: number; next?: string; prev?: string };
   results: Array<Character>;
 };
 
 async function getCharacters() {
-  return new Promise<GetCharacterResponse>(async (resolve, reject) => {
-    try {
-      const { data } = await axios.get<GetCharacterResponse>(
-        "https://rickandmortyapi.com/api/character"
-      );
-      resolve(data);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
-        reject(error.message);
-      } else {
-        console.log("unexpected error: ", error);
-        reject("An unexpected error occurred");
-      }
-    }
-  });
+  const { data } = await axios.get<GetCharacterResponse>(
+    "https://rickandmortyapi.com/api/character"
+  );
+  return data;
 }
 
 export const CharacterList = () => {

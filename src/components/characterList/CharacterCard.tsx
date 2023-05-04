@@ -11,10 +11,10 @@ export const CharacterCard = ({ character }: CharacterCardProps) => {
 
   if (status === "Alive") {
     color = "bg-green-600";
-  } else {
-    if (status === "Dead") {
-      color = "bg-red-600";
-    }
+  }
+
+  if (status === "Dead") {
+    color = "bg-red-600";
   }
 
   return (

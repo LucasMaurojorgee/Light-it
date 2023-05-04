@@ -1,9 +1,9 @@
 export type Character = {
   id: number;
-  name: String;
-  status: String;
-  species: String;
-  origin: { name: String };
-  location: { name: String };
+  name: string;
+  status: string;
+  species: string;
+  origin: { name: string };
+  location: { name: string };
   image: string;
 };
