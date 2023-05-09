@@ -19,20 +19,25 @@ export const CharacterList = () => {
   const [characters, setCharacters] = useState<Array<Character>>([]);
 
   useEffect(() => {
-    let mounted = true;
-    getCharacters().then((items) => {
-      if (mounted) {
-        setCharacters(items.results);
-      }
-    });
+    try {
+      let mounted = true;
 
-    return (): void => {
-      mounted = false;
-    };
+      getCharacters().then((items) => {
+        if (mounted) {
+          setCharacters(items.results);
+        }
+      });
+
+      return (): void => {
+        mounted = false;
+      };
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   return (
-    <div className="bg-gray-800 flex flex-wrap">
+    <div className="bg-gray-800 flex flex-wrap justify-center">
       {characters?.map((character) => (
         <CharacterCard character={character} />
       ))}
