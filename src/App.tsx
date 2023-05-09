@@ -1,10 +1,13 @@
-import { CharacterList } from "./components/characterList/CharacterList";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import CharacterList from "./components/characterList/characterList";
 
 function App() {
   return (
-    <div>
-      <CharacterList />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<CharacterList />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

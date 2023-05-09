@@ -15,7 +15,7 @@ async function getCharacters() {
   return data;
 }
 
-export const CharacterList = () => {
+const CharacterList = () => {
   const [characters, setCharacters] = useState<Array<Character>>([]);
 
   useEffect(() => {
@@ -42,3 +42,5 @@ export const CharacterList = () => {
     </div>
   );
 };
+
+export default CharacterList;
