@@ -19,21 +19,19 @@ export const CharacterList = () => {
   const [characters, setCharacters] = useState<Array<Character>>([]);
 
   useEffect(() => {
-    try {
-      let mounted = true;
+    let mounted = true;
 
-      getCharacters().then((items) => {
+    getCharacters()
+      .then((items) => {
         if (mounted) {
           setCharacters(items.results);
         }
-      });
+      })
+      .catch((error) => console.log(error));
 
-      return (): void => {
-        mounted = false;
-      };
-    } catch (error) {
-      console.log(error);
-    }
+    return (): void => {
+      mounted = false;
+    };
   }, []);
 
   return (
