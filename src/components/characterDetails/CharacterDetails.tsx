@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import { Character } from "../characterList/iCharacter";
 import { getColor } from "../characterList/fColors";
+import { Loading } from "../characterList/Loading";
 import axios from "axios";
 
 const CharacterDetails = () => {
@@ -26,7 +27,7 @@ const CharacterDetails = () => {
   }
 
   if (isLoading || !data) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   return (
