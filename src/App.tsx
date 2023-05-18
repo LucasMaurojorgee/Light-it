@@ -1,13 +1,20 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import CharacterList from "./components/characterList/characterList";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import CharacterQuery from "./components/characterList/CharactersQuery";
+import CharacterDetails from "./components/characterDetails/CharacterDetails";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<CharacterList />} />
-      </Routes>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<CharacterQuery />} />
+          <Route path="/characters/:id" element={<CharacterDetails />} />
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 

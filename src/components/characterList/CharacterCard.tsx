@@ -1,31 +1,28 @@
+import { Link } from "react-router-dom";
 import { Character } from "./iCharacter";
+import { getColor } from "./fColors";
 
 interface CharacterCardProps {
   character: Character;
 }
 
 export const CharacterCard = ({ character }: CharacterCardProps) => {
-  const { name, status, species, origin, location, image } = character;
-
-  let color = "bg-gray-500";
-
-  if (status === "Alive") {
-    color = "bg-green-600";
-  }
-
-  if (status === "Dead") {
-    color = "bg-red-600";
-  }
+  const { id, name, status, species, origin, location, image } = character;
 
   return (
-    <div className="flex m-3 text-white w-5/12 h-auto shadow-md bg-gray-700 rounded-md">
+    <div className="flex m-3 text-white w-5/12 h-52 shadow-md bg-gray-700 rounded-md">
       <img src={image} className="w-52 h-52 rounded-l-md mr-5  " />
 
       <div className="flex flex-col">
-        <p className="font-bold font-sans text-3xl ">{name}</p>
+        <Link
+          to={`/characters/${id}`}
+          className="font-bold font-sans text-3xl cursor-pointer hover:text-yellow-600"
+        >
+          {name}
+        </Link>
 
         <div className="flex flex-row mb-3 items-center">
-          <div className={`rounded ${color} w-2 h-2 mr-3`}></div>
+          <div className={`rounded ${getColor(status)} w-2 h-2 mr-3`}></div>
           <p>{`${status} - ${species}`}</p>
         </div>
 
