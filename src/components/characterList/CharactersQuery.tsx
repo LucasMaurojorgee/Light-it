@@ -50,20 +50,20 @@ const CharacterQuery = () => {
         {isLoading ? (
           <Loading />
         ) : (
-          data.results?.map((character) => (
+          (data.results?.map((character) => (
             <CharacterCard character={character} />
+          )),
+          (
+            <Pagination
+              page={page}
+              setPage={(value: number) => {
+                setPage(value);
+              }}
+              totalPages={data?.info.pages}
+            />
           ))
         )}
       </div>
-      {isLoading ? null : (
-        <Pagination
-          page={page}
-          setPage={(value: number) => {
-            setPage(value);
-          }}
-          totalPages={data?.info.pages}
-        />
-      )}
     </div>
   );
 };
