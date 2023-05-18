@@ -5,6 +5,7 @@ import { SearchBar } from "../searchBar/SearchBar";
 import { Character } from "./iCharacter";
 import { Loading } from "./Loading";
 import { Pagination } from "../pagination/Pagination";
+import { useDebounce } from "../../hooks/useDebounce";
 import axios from "axios";
 
 type GetCharacterResponse = {
@@ -12,25 +13,28 @@ type GetCharacterResponse = {
   results: Array<Character>;
 };
 
-async function getCharacters(filter: string, page: number) {
-  const { data } = await axios.get<GetCharacterResponse>(
-    `https://rickandmortyapi.com/api/character/?name=${filter}&page=${page}`
-  );
-  return data;
-}
-
 const CharacterQuery = () => {
   const [filter, setFilter] = useState<string>("");
   const [page, setPage] = useState<number>(1);
+
+  const debounceValue = useDebounce(filter, 300);
+
+  async function getCharacters(page: number) {
+    const { data } = await axios.get<GetCharacterResponse>(
+      `https://rickandmortyapi.com/api/character/?name=${debounceValue}&page=${page}`
+    );
+    return data;
+  }
 
   useEffect(() => {
     setPage(1);
   }, [filter]);
 
   const { isLoading, isError, data } = useQuery(
-    ["characters", filter, page],
-    () => getCharacters(filter, page)
+    ["characters", page, debounceValue],
+    () => getCharacters(page)
   );
+
   if (isError) {
     return;
   }
@@ -50,20 +54,20 @@ const CharacterQuery = () => {
         {isLoading ? (
           <Loading />
         ) : (
-          (data.results?.map((character) => (
+          data.results?.map((character) => (
             <CharacterCard character={character} />
-          )),
-          (
-            <Pagination
-              page={page}
-              setPage={(value: number) => {
-                setPage(value);
-              }}
-              totalPages={data?.info.pages}
-            />
           ))
         )}
       </div>
+      {isLoading ? null : (
+        <Pagination
+          page={page}
+          setPage={(value: number) => {
+            setPage(value);
+          }}
+          totalPages={data?.info.pages}
+        />
+      )}
     </div>
   );
 };
