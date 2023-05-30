@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { Character } from "./iCharacter";
-import { getColor } from "./fColors";
+import { Character } from "../../types/iCharacter";
+import { getColor } from "../../functions/fColors";
 
 interface CharacterCardProps {
   character: Character;

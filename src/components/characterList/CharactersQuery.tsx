@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { CharacterCard } from "./CharacterCard";
 import { SearchBar } from "../searchBar/SearchBar";
-import { Character } from "./iCharacter";
+import { Character } from "../../types/iCharacter";
 import { Loading } from "./Loading";
 import { Pagination } from "../pagination/Pagination";
 import { useDebounce } from "../../hooks/useDebounce";

@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
-import { Character } from "../characterList/iCharacter";
-import { getColor } from "../characterList/fColors";
+import { Character } from "../../types/iCharacter";
+import { getColor } from "../../functions/fColors";
 import { Loading } from "../characterList/Loading";
 import axios from "axios";
 
@@ -47,7 +47,7 @@ const CharacterDetails = () => {
             <div
               className={`rounded ${getColor(data.status)} w-2 h-2 mr-3`}
             ></div>
-            <p>{`${status} - ${data.species}`}</p>
+            <p>{`${data.status} - ${data.species}`}</p>
           </div>
 
           <p className="text-gray-500">Last known location:</p>

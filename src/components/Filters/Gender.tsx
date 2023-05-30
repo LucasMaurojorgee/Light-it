@@ -11,7 +11,7 @@ const Gender = ({ setGenderValue }: genderProps) => {
         htmlFor="location"
         className="block text-sm font-medium leading-6 text-white"
       >
-        Status
+        Gender
       </label>
       <select
         id="location"
