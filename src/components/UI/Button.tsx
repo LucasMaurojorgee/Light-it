@@ -1,5 +1,3 @@
-import React from "react";
-
 type ButtonProps = {
   buttonName: string;
   setIsOpen: (value: boolean) => void;
@@ -11,7 +9,7 @@ const Button = ({ buttonName, setIsOpen, isOpen }: ButtonProps) => {
     <button
       type="button"
       id="buttonMenu"
-      onClick={(e) => {
+      onClick={() => {
         setIsOpen(!isOpen);
       }}
       className="rounded-md bg-indigo-500 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 w-8"

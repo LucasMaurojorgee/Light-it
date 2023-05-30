@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CharacterCard } from "./CharacterCard";
 import { SearchBar } from "../searchBar/SearchBar";
 import { Character } from "../../types/iCharacter";
-import { Loading } from "./Loading";
+import { Loading } from "../loading/Loading";
 import { Pagination } from "../pagination/Pagination";
 import { useDebounce } from "../../hooks/useDebounce";
 import Status from "../Filters/Status";
@@ -18,33 +18,34 @@ type GetCharacterResponse = {
   results: Array<Character>;
 };
 
+async function getCharacters(
+  page: number,
+  statusValue: string,
+  genderValue: string,
+  specieValue: string,
+  debounceValue: string
+) {
+  const { data } = await axios.get<GetCharacterResponse>(
+    `https://rickandmortyapi.com/api/character/?name=${debounceValue}&page=${page}&status=${statusValue}&gender=${genderValue}&species=${specieValue}`
+  );
+  return data;
+}
+
 const CharacterQuery = () => {
   const [filter, setFilter] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const [showStatus, setShowStatus] = useState<boolean>(false);
-  const [statusValue, setStatusValue] = useState<string>("");
+  const [showStatus, setShowStatus] = useState(false);
+  const [statusValue, setStatusValue] = useState("");
 
-  const [showGender, setShowGender] = useState<boolean>(false);
-  const [genderValue, setGenderValue] = useState<string>("");
+  const [showGender, setShowGender] = useState(false);
+  const [genderValue, setGenderValue] = useState("");
 
-  const [showSpecie, setShowSpecie] = useState<boolean>(false);
-  const [specieValue, setSpecieValue] = useState<string>("");
+  const [showSpecie, setShowSpecie] = useState(false);
+  const [specieValue, setSpecieValue] = useState("");
 
   const debounceValue = useDebounce(filter, 300);
-
-  async function getCharacters(
-    page: number,
-    statusValue: string,
-    genderValue: string,
-    specieValue: string
-  ) {
-    const { data } = await axios.get<GetCharacterResponse>(
-      `https://rickandmortyapi.com/api/character/?name=${debounceValue}&page=${page}&status=${statusValue}&gender=${genderValue}&species=${specieValue}`
-    );
-    return data;
-  }
 
   useEffect(() => {
     setPage(1);
@@ -52,7 +53,8 @@ const CharacterQuery = () => {
 
   const { isLoading, isError, data } = useQuery(
     ["characters", page, debounceValue, statusValue, genderValue, specieValue],
-    () => getCharacters(page, statusValue, genderValue, specieValue)
+    () =>
+      getCharacters(page, statusValue, genderValue, specieValue, debounceValue)
   );
 
   if (isError) {
@@ -115,7 +117,7 @@ const CharacterQuery = () => {
           <Loading />
         ) : (
           data.results?.map((character) => (
-            <CharacterCard character={character} />
+            <CharacterCard character={character} key={character.id} />
           ))
         )}
       </div>

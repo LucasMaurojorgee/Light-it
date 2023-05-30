@@ -1,4 +1,3 @@
-import React from "react";
 import CheckBox from "../UI/CheckBox";
 
 type checkBoxListProps = {
@@ -20,11 +19,23 @@ const CheckBoxList = ({
 }: checkBoxListProps) => {
   return (
     <div className="absolute bg-white rounded top-12 right-[445px]">
-      <CheckBox inputName={"status"} func={setShowStatus} val={showStatus} />
+      <CheckBox
+        label={"status"}
+        onChange={setShowStatus}
+        checked={showStatus}
+      />
 
-      <CheckBox inputName={"specie"} func={setShowSpecie} val={showSpecie} />
+      <CheckBox
+        label={"specie"}
+        onChange={setShowSpecie}
+        checked={showSpecie}
+      />
 
-      <CheckBox inputName={"gender"} val={showGender} func={setShowGender} />
+      <CheckBox
+        label={"gender"}
+        checked={showGender}
+        onChange={setShowGender}
+      />
     </div>
   );
 };
