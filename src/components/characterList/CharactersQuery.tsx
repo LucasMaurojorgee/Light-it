@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { CharacterCard } from "./CharacterCard";
+import { CharacterList } from "./CharacterList";
 import { SearchBar } from "../searchBar/SearchBar";
 import { Character } from "../../types/iCharacter";
 import { Loading } from "../loading/Loading";
@@ -108,27 +108,19 @@ const CharacterQuery = () => {
 
       {showSpecie ? <Species setSpecieValue={setSpecieValue} /> : null}
 
-      <div
-        className={`bg-gray-800 flex flex-wrap justify-center ${
-          data ? (data.results.length <= 6 ? "h-screen" : null) : null
-        }`}
-      >
-        {isLoading ? (
-          <Loading />
-        ) : (
-          data.results?.map((character) => (
-            <CharacterCard character={character} key={character.id} />
-          ))
-        )}
-      </div>
-      {isLoading ? null : (
-        <Pagination
-          page={page}
-          setPage={(value: number) => {
-            setPage(value);
-          }}
-          totalPages={data?.info.pages}
-        />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <CharacterList data={data} />
+          <Pagination
+            page={page}
+            setPage={(value: number) => {
+              setPage(value);
+            }}
+            totalPages={data?.info.pages}
+          />
+        </>
       )}
     </div>
   );
