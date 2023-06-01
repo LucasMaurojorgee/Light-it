@@ -1,5 +1,3 @@
-import React from "react";
-
 export const Loading = () => {
   return (
     <div role="status" className="bg-gray-800 h-screen flex items-center">

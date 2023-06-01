@@ -1,13 +1,11 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
-import { Character } from "../characterList/iCharacter";
-import { getColor } from "../characterList/fColors";
-import { Loading } from "../characterList/Loading";
+import { Character } from "../../types/iCharacter";
+import { getColor } from "../../functions/fColors";
+import { Loading } from "../loading/Loading";
 import axios from "axios";
 
 const CharacterDetails = () => {
-  const queryClient = useQueryClient();
-
   async function getCharacter() {
     const { data } = await axios.get<Character>(
       `https://rickandmortyapi.com/api/character/${params.id}`
@@ -37,7 +35,7 @@ const CharacterDetails = () => {
           Back to home
         </button>
       </Link>
-      <div className="flex m-3 text-white w-5/12 h-auto shadow-md bg-gray-700 rounded-md shadow-md">
+      <div className="flex m-3 text-white w-5/12 h-auto shadow-md bg-gray-700 rounded-md">
         <img src={data.image} className="w-72 h-72 rounded-l-md mr-5  " />
 
         <div className="flex flex-col justify-center">
@@ -47,7 +45,7 @@ const CharacterDetails = () => {
             <div
               className={`rounded ${getColor(data.status)} w-2 h-2 mr-3`}
             ></div>
-            <p>{`${status} - ${data.species}`}</p>
+            <p>{`${data.status} - ${data.species}`}</p>
           </div>
 
           <p className="text-gray-500">Last known location:</p>
